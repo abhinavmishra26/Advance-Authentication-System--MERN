@@ -31,15 +31,8 @@ export const signup=async(req,res)=>{
             verificationTokenExpiresAt:Date.now()+ 24 * 60 *60 *1000,
         })
         generateTokenAndSetCookie(res,user._id);
-        
 
-        try {
-  await sendVerificationEmail(user.email, verificationToken);
-} catch (err) {
-  console.error("Email failed:", err.message);
-}
-       
-        
+        await sendVerificationEmail(user.email, verificationToken);
         res.status(201).json({
             success:true,
             message:"User created successfully",
@@ -48,7 +41,6 @@ export const signup=async(req,res)=>{
                 password:undefined,
             }
         })
-
     }
     catch(error){
         res.status(400).json({
@@ -115,8 +107,7 @@ export const login=async(req,res)=>{
     return res.json({success:true , message:"Login Successfully",user:{
         ...user._doc,
         password:undefined,
-    }});
-    
+    }}); 
     }
     catch(error){
         return res.json({
