@@ -19,8 +19,6 @@ const transporter=nodemailer.createTransport({
     }
 });
 
-console.log("Email:", process.env.SENDER_EMAIL);
-console.log("App Password:", process.env.APP_PASS ? "✔️ present" : "❌ missing");
 export const sendEmail = async (to, subject, html) => {
     try {
       await transporter.sendMail({

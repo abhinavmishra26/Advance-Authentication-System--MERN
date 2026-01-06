@@ -5,10 +5,7 @@ import {sendEmail} from "./nodemailer.js";
 
 export const sendVerificationEmail=async (email,verificationToken)=>{
     console.log(verificationToken);
-  
-   
     try{
-       
         await sendEmail(
             email,
             "Verify your email",
@@ -23,7 +20,7 @@ export const sendVerificationEmail=async (email,verificationToken)=>{
 }
 
 
-export const sendWelcomeEmail=async (email,name)=> {
+export const sendWelcomeEmail=async (email,name)=>{
     
     try{
         await sendEmail(
