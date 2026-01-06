@@ -33,7 +33,11 @@ export const signup=async(req,res)=>{
         generateTokenAndSetCookie(res,user._id);
         
 
-        await sendVerificationEmail(user.email,verificationToken);
+        try {
+  await sendVerificationEmail(user.email, verificationToken);
+} catch (err) {
+  console.error("Email failed:", err.message);
+}
        
         
         res.status(201).json({
