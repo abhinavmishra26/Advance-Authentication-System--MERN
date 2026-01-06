@@ -15,27 +15,38 @@ import ResetPasswordPage from './Pages/ResetPasswordPage'
 
 
 
-const ProtectedRoute=({children})=>{
-  const {isAuthenticated,user}=useAuthStore();
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!user) {
+    return <LoadingSpinner />;
+  }
+
+  if (!user.isVerified) {
+    return <Navigate to="/verify-email" replace />;
+  }
+
+  return children;
+};
+
+const RedirectAuthenticatedUser = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
+
   
-  if(!isAuthenticated){
-    return <Navigate to="/login" replace/>;
+  if (!user) {
+    return children;
   }
-  if(!user.isVerified){
-    return <Navigate to="/verify-email" replace/>;
+
+  if (isAuthenticated && user.isVerified) {
+    return <Navigate to="/" replace />;
   }
+
   return children;
-
-}
-
-const RedirectAuthenticatedUser=({children})=>{
-  const {isAuthenticated,user}=useAuthStore();
-
-  if(isAuthenticated && user.isVerified){
-    return <Navigate to="/" replace/>
-  }
-  return children;
-}
+};
 
 function App() {
   const {isCheckingAuth ,checkAuth }=useAuthStore();
@@ -55,7 +66,7 @@ function App() {
     <Routes>
       <Route path="/" element={<ProtectedRoute><DashboardPage/></ProtectedRoute>} />
       <Route path="/SignUp" element={<RedirectAuthenticatedUser><SignUp/></RedirectAuthenticatedUser>}/>
-      <Route path="/Login" element={<RedirectAuthenticatedUser><Login/></RedirectAuthenticatedUser>}/>
+      <Route path="/login" element={<RedirectAuthenticatedUser><Login/></RedirectAuthenticatedUser>}/>
       <Route path="/verify-email"element={<EmailVerificationPage/>}/>
       <Route path="/forget-password" element={<RedirectAuthenticatedUser><ForgetPassword/></RedirectAuthenticatedUser>}/>
       <Route path='/reset-password/:token' element={<RedirectAuthenticatedUser><ResetPasswordPage/></RedirectAuthenticatedUser>}></Route>
