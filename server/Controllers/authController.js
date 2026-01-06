@@ -10,7 +10,6 @@ import User from "../Models/userModel.js";
 dotenv.config();
 export const signup=async(req,res)=>{
     const {name ,email,password}=req.body;
-   
     try{
         if(!name|| !email || !password){
             // throw new Error("Missing details");
@@ -53,7 +52,6 @@ export const signup=async(req,res)=>{
             message:error.message
         })
     }
-
 }
 
 export const verifyEmail=async(req,res)=>{
