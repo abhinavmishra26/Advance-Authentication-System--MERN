@@ -66,7 +66,7 @@ const Login = () => {
         <div className='px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center'>
                 <p className='text-sm text-gray-400'>
                   Don't have an account?{" "}
-                  <NavLink to={"/signUp"} className='text-green-400 hover:underline'>
+                  <NavLink to={"/SignUp"} className='text-green-400 hover:underline'>
                     signUp
                   </NavLink>
                 </p>
